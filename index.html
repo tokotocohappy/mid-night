@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midnight Melody - 失恋音楽タイプ診断</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="stars-container" id="stars"></div>
+
+    <button class="hamburger" id="hamburger-btn" onclick="app.toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <nav id="nav-overlay">
+        <div class="nav-content">
+            <p class="nav-title">MENU</p>
+            <ul class="nav-links">
+                <li><a href="#" onclick="app.handleMenu('title')">TOP / ホーム</a></li>
+                <li><a href="#" onclick="app.handleMenu('start')">RESTART / 診断をやり直す</a></li>
+                <li><a href="#" onclick="app.handleMenu('list')">ALL TYPES / 全タイプ一覧</a></li>
+            </ul>
+            <button class="close-btn" onclick="app.toggleMenu()">CLOSE</button>
+        </div>
+    </nav>
+
+    <div id="app">
+        
+        <section id="title-screen" class="screen active">
+            <h1 class="main-title">Midnight Melody</h1>
+            <p class="sub-title">失恋音楽タイプ診断</p>
+            <p class="intro-text">あなたの心の傷に寄り添う<br>最適な音楽を見つけます。</p>
+            <button class="btn start-btn" onclick="app.startQuiz()">診断を始める</button>
+            <button class="btn btn-outline" onclick="app.showList()">全タイプ一覧を見る</button>
+        </section>
+
+        <section id="quiz-screen" class="screen">
+            <div class="header-info">
+                <div class="step-count" id="step-count">01 / 25</div>
+                <div class="progress-bar"><div id="progress-inner"></div></div>
+            </div>
+            <h2 id="question-text">質問テキスト</h2>
+            <div id="options-container"></div>
+
+            <div class="quiz-nav">
+                <button id="prev-btn" class="nav-btn" onclick="app.prevQuestion()">
+                    ← 前の質問に戻る
+                </button>
+            </div>
+        </section>
+
+        <section id="result-screen" class="screen">
+            <div class="result-header">
+                <img id="res-img" class="result-img" src="" alt="Image">
+                <p class="vibe-text">Your Midnight Vibe is...</p>
+                <div class="type-name" id="res-type"></div>
+            </div>
+            
+            <div class="description" id="res-desc"></div>
+            
+            <div class="recommendation">
+                <div class="rec-title">✦ RECOMMENDED SONGS</div>
+                <div id="res-songs"></div>
+            </div>
+
+            <div class="action-area">
+                <button class="restart-btn" onclick="app.reset()">ホームに戻る</button>
+                <button class="btn btn-outline" onclick="app.showList()">他のタイプを見る</button>
+            </div>
+        </section>
+
+        <section id="list-screen" class="screen">
+            <h2>All Music Types</h2>
+            <p class="sub-text">タップで詳細を表示</p>
+            <div id="grid-container" class="grid-container"></div>
+            <button class="btn btn-outline mt-20" onclick="app.reset()">ホームに戻る</button>
+        </section>
+
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
