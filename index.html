@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Midnight Melody - 失恋音楽タイプ診断</title>
     <link rel="stylesheet" href="css/style.css">
+    
+    <meta property="og:title" content="Midnight Melody - 失恋音楽タイプ診断">
+    <meta property="og:description" content="深夜2時、あなたの心の傷に寄り添う音楽を見つけます。">
+    <meta property="og:image" content="https://example.com/assets/images/ogp.jpg">
 </head>
 <body>
 
@@ -34,6 +38,7 @@
             <h1 class="main-title">Midnight Melody</h1>
             <p class="sub-title">失恋音楽タイプ診断</p>
             <p class="intro-text">あなたの心の傷に寄り添う<br>最適な音楽を見つけます。</p>
+            
             <button class="btn start-btn" onclick="app.startQuiz()">診断を始める</button>
             <button class="btn btn-outline" onclick="app.showList()">全タイプ一覧を見る</button>
         </section>
@@ -43,6 +48,7 @@
                 <div class="step-count" id="step-count">01 / 25</div>
                 <div class="progress-bar"><div id="progress-inner"></div></div>
             </div>
+            
             <h2 id="question-text">質問テキスト</h2>
             <div id="options-container"></div>
 
@@ -68,6 +74,10 @@
             </div>
 
             <div class="action-area">
+                <button id="share-btn" class="btn share-btn" onclick="app.shareToX()">
+                    𝕏 で結果をポストする
+                </button>
+                
                 <button class="restart-btn" onclick="app.reset()">ホームに戻る</button>
                 <button class="btn btn-outline" onclick="app.showList()">他のタイプを見る</button>
             </div>
@@ -76,7 +86,9 @@
         <section id="list-screen" class="screen">
             <h2>All Music Types</h2>
             <p class="sub-text">タップで詳細を表示</p>
+            
             <div id="grid-container" class="grid-container"></div>
+            
             <button class="btn btn-outline mt-20" onclick="app.reset()">ホームに戻る</button>
         </section>
 

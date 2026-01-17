@@ -3,6 +3,7 @@ class MidnightApp {
         // 状態管理
         this.currentIdx = 0;
         this.answerHistory = []; // 回答の履歴を保存する配列
+        this.currentType = null; // ★追加: 現在表示中の結果タイプ（シェア用）
         
         // 画面要素
         this.screens = {
@@ -78,7 +79,6 @@ class MidnightApp {
         const q = DATA.questions[this.currentIdx];
         
         // --- プログレスバー（ゲージ）の表示 ---
-        // 元のロジック通り「現在の質問番号」に基づいて計算します
         const currentStep = this.currentIdx + 1;
         const totalSteps = DATA.questions.length;
         
@@ -100,7 +100,7 @@ class MidnightApp {
             q.a.forEach(opt => {
                 const btn = document.createElement("button");
                 btn.className = "btn";
-                // 戻ってきた時に、以前選んだ選択肢がわかるように色を変える（任意）
+                // 戻ってきた時に、以前選んだ選択肢がわかるように色を変える
                 if (this.answerHistory[this.currentIdx] === opt.t) {
                     btn.style.borderColor = "var(--accent)";
                     btn.style.background = "rgba(252, 211, 77, 0.15)";
@@ -117,7 +117,7 @@ class MidnightApp {
             if (this.currentIdx === 0) {
                 prevBtn.style.display = "none";
             } else {
-                prevBtn.style.display = "inline-flex"; // cssに合わせてflexかblockで
+                prevBtn.style.display = "inline-flex";
             }
         }
     }
@@ -136,11 +136,11 @@ class MidnightApp {
         }
     }
 
-    // ★前の質問に戻る処理
+    // 前の質問に戻る処理
     prevQuestion() {
         if (this.currentIdx > 0) {
             this.currentIdx--; // インデックスを戻す
-            this.showQuestion(); // 再描画（これでゲージも自動的に戻る）
+            this.showQuestion(); // 再描画
         }
     }
 
@@ -161,12 +161,16 @@ class MidnightApp {
 
     // 結果画面表示
     renderResultPage(mbtiType) {
+        // ★重要: 現在のタイプを保存（シェア機能で使用）
+        this.currentType = mbtiType;
+
         const res = DATA.results[mbtiType];
         
         const imgEl = document.getElementById("res-img");
         if(imgEl) {
             imgEl.src = res.img;
             imgEl.onerror = function() {
+                // 画像読み込みエラー時のフォールバック
                 this.src = "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?q=80&w=600";
             };
         }
@@ -183,6 +187,7 @@ class MidnightApp {
                 const item = document.createElement("div");
                 item.className = "song-item";
                 const encodedSong = encodeURIComponent(song);
+                // リンクを修正しました
                 const spotifyUrl = `https://open.spotify.com/search/${encodedSong}`;
                 const appleUrl = `https://music.apple.com/jp/search?term=${encodedSong}`;
     
@@ -199,6 +204,29 @@ class MidnightApp {
     }
 
     /* ============================================================
+       ★追加: X（Twitter）へのシェア機能
+       ============================================================ */
+    shareToX() {
+        // 現在のタイプ情報がない場合は中断
+        if (!this.currentType || !DATA.results[this.currentType]) return;
+
+        const data = DATA.results[this.currentType];
+        const pageUrl = window.location.href; // 現在のページURL
+
+        // ポスト文面を作成
+        // 結果名 + 1曲目 + 説明文の冒頭 + ハッシュタグ
+        const text = `私の失恋音楽タイプは【${data.name}】\n処方箋ソングは『${data.songs[0]}』でした。\n\n${data.desc.substring(0, 45)}...\n`;
+        
+        const hashtags = "MidnightMelody,失恋音楽診断,深夜2時のメンヘラ診断";
+        
+        // Xの投稿画面URLを作成
+        const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(pageUrl)}&hashtags=${encodeURIComponent(hashtags)}`;
+        
+        // 別タブで開く
+        window.open(tweetUrl, '_blank');
+    }
+
+    /* ============================================================
        一覧画面
        ============================================================ */
     initListGrid() {
@@ -209,7 +237,7 @@ class MidnightApp {
             const card = document.createElement("div");
             card.className = "list-card";
             card.onclick = () => {
-                this.renderResultPage(key);
+                this.renderResultPage(key); // ここでcurrentTypeも更新される
                 this.switchScreen('result');
             };
             card.innerHTML = `

@@ -59,8 +59,16 @@ h1, h2 { font-weight: normal; margin-bottom: 1rem; }
     background: rgba(255,255,255,0.05); color: var(--text); border: 1px solid var(--border); 
     padding: 16px; border-radius: 12px; cursor: pointer; font-size: 0.9rem; margin-bottom: 12px; width: 100%; transition: 0.3s;
     display: block;
+    -webkit-tap-highlight-color: transparent; /* スマホタップ時のグレー背景を消す */
 }
-.btn:hover { background: rgba(252, 211, 77, 0.15); border-color: var(--accent); }
+
+/* PCのみホバー適用 */
+@media (hover: hover) {
+    .btn:hover { background: rgba(252, 211, 77, 0.15); border-color: var(--accent); }
+}
+
+.btn:active { background: rgba(252, 211, 77, 0.1); border-color: var(--accent); transform: scale(0.98); } /* スマホ用に押した瞬間だけ反応させる */
+
 .btn-outline { background: transparent; border: 1px solid var(--sub-text); color: var(--sub-text); font-size: 0.8rem; margin-top: 10px; }
 
 .restart-btn { background: none; border: none; color: var(--sub-text); text-decoration: underline; margin-top: 10px; cursor: pointer; font-size: 0.8rem; }
@@ -79,7 +87,12 @@ h1, h2 { font-weight: normal; margin-bottom: 1rem; }
 .sub-title { font-size: 0.9rem; color: var(--sub-text); margin-bottom: 2rem; letter-spacing: 4px; }
 .intro-text { font-size: 0.85rem; line-height: 1.8; margin-bottom: 3rem; color: #ddd; }
 .start-btn { background: var(--accent); color: #000; font-weight: bold; border: none; }
-.start-btn:hover { background: #fff; transform: scale(1.02); }
+
+/* PCのみホバー適用 */
+@media (hover: hover) {
+    .start-btn:hover { background: #fff; transform: scale(1.02); }
+}
+.start-btn:active { transform: scale(0.98); }
 
 /* 2. クイズ画面 */
 .header-info { margin-bottom: 2rem; }
@@ -99,14 +112,18 @@ h1, h2 { font-weight: normal; margin-bottom: 1rem; }
     background: transparent; border: none; color: var(--sub-text); font-size: 0.8rem; cursor: pointer;
     padding: 10px 20px; border-radius: 20px; transition: 0.3s; display: flex; align-items: center; gap: 5px;
 }
-.nav-btn:hover { background: rgba(255, 255, 255, 0.05); color: var(--text); }
+
+/* PCのみホバー適用 */
+@media (hover: hover) {
+    .nav-btn:hover { background: rgba(255, 255, 255, 0.05); color: var(--text); }
+}
+
 .nav-btn.hidden { display: none; }
 
 
 /* 3. 結果画面 */
 #result-screen { padding-bottom: 20px; }
 
-/* ▼ 画像サイズ変更箇所 (220px -> 290px) */
 .result-img { 
     width: 100%; 
     height: 290px; 
@@ -130,16 +147,24 @@ h1, h2 { font-weight: normal; margin-bottom: 1rem; }
     font-size: 0.7rem; text-decoration: none; padding: 6px 12px; border-radius: 20px;
     border: 1px solid rgba(255,255,255,0.2); color: var(--sub-text); transition: 0.3s;
 }
-.platform-link.spotify:hover { border-color: #1DB954; color: #1DB954; background: rgba(29, 185, 84, 0.1); }
-.platform-link.apple:hover { border-color: #FA243C; color: #FA243C; background: rgba(250, 36, 60, 0.1); }
+
+/* PCのみホバー適用 */
+@media (hover: hover) {
+    .platform-link.spotify:hover { border-color: #1DB954; color: #1DB954; background: rgba(29, 185, 84, 0.1); }
+    .platform-link.apple:hover { border-color: #FA243C; color: #FA243C; background: rgba(250, 36, 60, 0.1); }
+}
 
 /* 4. 一覧画面 */
 #list-screen { padding-bottom: 20px; }
 .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; text-align: left; }
 .list-card { background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; cursor: pointer; transition: 0.3s; border: 1px solid var(--border); }
-.list-card:hover { border-color: var(--accent); transform: translateY(-3px); }
 
-/* ▼ 画像サイズ変更箇所 (90px -> 120px) */
+/* PCのみホバー適用 */
+@media (hover: hover) {
+    .list-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+}
+.list-card:active { transform: scale(0.98); }
+
 .list-card img { 
     width: 100%; 
     height: 120px; 
@@ -159,8 +184,14 @@ h1, h2 { font-weight: normal; margin-bottom: 1rem; }
     background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px;
     z-index: 1000; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
     backdrop-filter: blur(10px); transition: 0.3s;
+    -webkit-tap-highlight-color: transparent;
 }
-.hamburger:hover { background: rgba(252, 211, 77, 0.2); border-color: var(--accent); }
+
+/* PCのみホバー適用 */
+@media (hover: hover) {
+    .hamburger:hover { background: rgba(252, 211, 77, 0.2); border-color: var(--accent); }
+}
+
 .hamburger span { display: block; width: 20px; height: 2px; background-color: #fff; border-radius: 2px; transition: 0.3s; }
 
 .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -181,10 +212,40 @@ h1, h2 { font-weight: normal; margin-bottom: 1rem; }
 .nav-links { list-style: none; padding: 0; margin: 0; }
 .nav-links li { margin-bottom: 25px; }
 .nav-links a { color: #fff; text-decoration: none; font-size: 1.2rem; font-weight: bold; letter-spacing: 1px; transition: 0.3s; display: block; }
-.nav-links a:hover { color: var(--accent); transform: scale(1.1); }
+
+/* PCのみホバー適用 */
+@media (hover: hover) {
+    .nav-links a:hover { color: var(--accent); transform: scale(1.1); }
+}
 
 .close-btn {
     margin-top: 40px; background: transparent; border: 1px solid var(--sub-text); color: var(--sub-text);
     padding: 10px 30px; border-radius: 30px; cursor: pointer; font-size: 0.8rem; transition: 0.3s;
 }
-.close-btn:hover { border-color: #fff; color: #fff; }
+
+/* PCのみホバー適用 */
+@media (hover: hover) {
+    .close-btn:hover { border-color: #fff; color: #fff; }
+}
+
+/* style.css の末尾などに追加 */
+
+.share-btn {
+    background: #000; /* Xのブランドカラー */
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-weight: bold;
+    font-family: sans-serif; /* Xの文字化けを防ぐ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+/* PCのみホバーで少し明るく */
+@media (hover: hover) {
+    .share-btn:hover {
+        background: #1a1a1a;
+        border-color: #fff;
+    }
+}
